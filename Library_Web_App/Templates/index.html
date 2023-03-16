@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Book Name</th>
+        <th>Book Price</th>
+        <th>Book Author</th>
+        <th>Book Genere</th>
+
+
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in All_Books %}
+        <tr>
+          <td>{{ book.id }}</td>
+          <td>{{ book.Book_Name }}</td>
+          <td>{{ book.Book_Price }}</td>
+          <td>{{ book.Book_Author }}</td>
+          <td>{{ book.Book_Genere }}</td>
+
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  {% if All_Books.has_other_pages %}
+    <ul class="pagination">
+      {% if All_Books.has_previous %}
+        <li><a href="?page={{ All_Books.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+      {% endif %}
+      {% for i in All_Books.paginator.page_range %}
+        {% if All_Books.number == i %}
+          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if All_Books.has_next %}
+        <li><a href="?page={{ All_Books.next_page_number }}">&raquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+{% endblock %}
